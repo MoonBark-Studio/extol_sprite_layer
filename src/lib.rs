@@ -107,7 +107,7 @@ pub fn clear_z_coordinates(mut query: Query<&mut Transform, With<RenderZCoordina
 /// descendants.
 pub fn propagate_layers<Layer: LayerIndex>(
     recursive_query: Query<(Option<&Children>, Option<&Layer>)>,
-    root_query: Query<(Entity, &Layer), Without<Parent>>,
+    root_query: Query<(Entity, &Layer), Without<ChildOf>>,
     mut size: Local<usize>,
 ) -> EntityHashMap<Layer> {
     let mut layer_map = EntityHashMap::default();
