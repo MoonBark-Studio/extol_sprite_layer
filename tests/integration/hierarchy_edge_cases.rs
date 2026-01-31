@@ -5,6 +5,10 @@
 use bevy::prelude::*;
 use extol_sprite_layer::{LayerIndex, SpriteLayerPlugin};
 
+fn set_parent(world: &mut World, child: Entity, parent: Entity) {
+    world.entity_mut(child).set_parent(parent);
+}
+
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug, Component)]
 enum TestLayer {
     Bottom,
@@ -52,8 +56,8 @@ fn test_deep_hierarchy_10_levels() {
     for _ in 1..10 {
         let child = app.world_mut()
             .spawn(TransformBundle::default())
-            .set_parent(parent)
             .id();
+        set_parent(app.world_mut(), child, parent);
         entities.push(child);
         parent = child;
     }
@@ -81,8 +85,8 @@ fn test_wide_hierarchy_50_children() {
             .spawn(TransformBundle::from_transform(
                 Transform::from_xyz(i as f32 * 10.0, 0.0, 0.0)
             ))
-            .set_parent(parent)
             .id();
+        set_parent(app.world_mut(), child, parent);
         children.push(child);
     }
     
