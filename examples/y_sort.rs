@@ -33,7 +33,8 @@ fn main() {
 }
 
 fn spawn_sprites(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    // Bevy 0.18: Use Camera2d instead of Camera2dBundle
+    commands.spawn(Camera2d);
     // generate a nice color gradient and shuffle it
     let mut color_pos: Vec<(Color, Vec3)> = (0..10)
         .map(|i| {
@@ -53,25 +54,19 @@ fn spawn_sprites(mut commands: Commands) {
             ..default()
         };
 
-        commands.spawn((SpriteBundle {
-            sprite: sprite.clone(),
-            transform: Transform::from_translation(pos - 80.0 * Vec3::X),
-            ..default()
-        },));
+        // Bevy 0.18: Use required components instead of SpriteBundle
+        commands.spawn((sprite.clone(), Transform::from_translation(pos - 80.0 * Vec3::X)));
         commands.spawn((
-            SpriteBundle {
-                sprite: sprite.clone(),
-                transform: Transform::from_translation(pos + 80.0 * Vec3::X),
-                ..default()
-            },
+            sprite.clone(),
+            Transform::from_translation(pos + 80.0 * Vec3::X),
             SpriteLayer::Middle,
         ));
     }
 
-    info!("Tap space to toggle y-sorting.");
+    println!("Tap space to toggle y-sorting.");
 }
 
 fn toggle_y_sort(mut options: ResMut<SpriteLayerOptions>) {
     options.y_sort = !options.y_sort;
-    info!("y sort is now {}", options.y_sort);
+    println!("y sort is now {}", options.y_sort);
 }

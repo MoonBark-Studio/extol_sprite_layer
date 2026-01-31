@@ -26,12 +26,10 @@ fn setup_app(count: u64) -> App {
             custom_size: Some(Vec2::new(60.0, 60.0)),
             ..default()
         };
+        // Bevy 0.18: Use required components instead of SpriteBundle
         app.world_mut().spawn((
-            SpriteBundle {
-                sprite,
-                transform: Transform::from_xyz(0., fastrand::f32(), 0.),
-                ..default()
-            },
+            sprite,
+            Transform::from_xyz(0., fastrand::f32(), 0.),
             SpriteLayer::Middle,
         ));
     }

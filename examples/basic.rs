@@ -30,7 +30,8 @@ fn main() {
 }
 
 fn spawn_sprites(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    // Bevy 0.18: Use Camera2d instead of Camera2dBundle
+    commands.spawn(Camera2d);
     // generate a nice color gradient and shuffle it
     let mut color_pos: Vec<(SpriteLayer, Color, Vec3)> = (0..10)
         .map(|i| {
@@ -51,41 +52,32 @@ fn spawn_sprites(mut commands: Commands) {
             ..default()
         };
 
-        commands.spawn((SpriteBundle {
-            sprite: sprite.clone(),
-            transform: Transform::from_translation(pos - 80.0 * Vec3::X),
-            ..default()
-        },));
+        // Bevy 0.18: Use required components instead of SpriteBundle
+        commands.spawn((sprite.clone(), Transform::from_translation(pos - 80.0 * Vec3::X)));
         commands.spawn((
-            SpriteBundle {
-                sprite: sprite.clone(),
-                transform: Transform::from_translation(pos + 80.0 * Vec3::X),
-                ..default()
-            },
+            sprite.clone(),
+            Transform::from_translation(pos + 80.0 * Vec3::X),
             layer,
         ));
     }
 
     // spawn some white squares that should be on top of everything else
-    commands.spawn(SpriteBundle {
-        sprite: Sprite {
+    // Bevy 0.18: Use required components
+    commands.spawn((
+        Sprite {
             color: Color::WHITE,
             custom_size: Some(Vec2::new(30.0, 30.0)),
             ..default()
         },
-        transform: Transform::from_translation(-50.0 * Vec3::X),
-        ..default()
-    });
+        Transform::from_translation(-50.0 * Vec3::X),
+    ));
     commands.spawn((
-        SpriteBundle {
-            sprite: Sprite {
-                color: Color::WHITE,
-                custom_size: Some(Vec2::new(30.0, 30.0)),
-                ..default()
-            },
-            transform: Transform::from_translation(110.0 * Vec3::X),
+        Sprite {
+            color: Color::WHITE,
+            custom_size: Some(Vec2::new(30.0, 30.0)),
             ..default()
         },
+        Transform::from_translation(110.0 * Vec3::X),
         SpriteLayer::Top,
     ));
 }
