@@ -111,30 +111,30 @@ fn test_complex_tree_structure() {
     // Level 1: 3 children with different layers
     let child_a = app.world_mut()
         .spawn((TransformBundle::default(), TestLayer::Middle))
-        .set_parent(root)
         .id();
+    set_parent(app.world_mut(), child_a, root);
     let child_b = app.world_mut()
         .spawn(TransformBundle::default())
-        .set_parent(root)
         .id();
+    set_parent(app.world_mut(), child_b, root);
     let child_c = app.world_mut()
         .spawn((TransformBundle::default(), TestLayer::Top))
-        .set_parent(root)
         .id();
+    set_parent(app.world_mut(), child_c, root);
     
     // Level 2: grandchildren
     let grandchild_a1 = app.world_mut()
         .spawn(TransformBundle::default())
-        .set_parent(child_a)
         .id();
+    set_parent(app.world_mut(), grandchild_a1, child_a);
     let grandchild_b1 = app.world_mut()
         .spawn(TransformBundle::default())
-        .set_parent(child_b)
         .id();
+    set_parent(app.world_mut(), grandchild_b1, child_b);
     let grandchild_b2 = app.world_mut()
         .spawn((TransformBundle::default(), TestLayer::Top))
-        .set_parent(child_b)
         .id();
+    set_parent(app.world_mut(), grandchild_b2, child_b);
     
     app.update();
     
@@ -158,14 +158,14 @@ fn test_entity_with_children_but_no_layer() {
     // Child with layer
     let child = app.world_mut()
         .spawn((TransformBundle::default(), TestLayer::Middle))
-        .set_parent(parent)
         .id();
+    set_parent(app.world_mut(), child, parent);
     
     // Grandchild without layer
     let grandchild = app.world_mut()
         .spawn(TransformBundle::default())
-        .set_parent(child)
         .id();
+    set_parent(app.world_mut(), grandchild, child);
     
     app.update();
     
@@ -194,12 +194,12 @@ fn test_multiple_roots() {
     // Add children to both
     let child_a = app.world_mut()
         .spawn(TransformBundle::default())
-        .set_parent(root_a)
         .id();
+    set_parent(app.world_mut(), child_a, root_a);
     let child_b = app.world_mut()
         .spawn(TransformBundle::default())
-        .set_parent(root_b)
         .id();
+    set_parent(app.world_mut(), child_b, root_b);
     
     app.update();
     
@@ -223,8 +223,8 @@ fn test_reparenting() {
     
     let child = app.world_mut()
         .spawn(TransformBundle::default())
-        .set_parent(parent_a)
         .id();
+    set_parent(app.world_mut(), child, parent_a);
     
     app.update();
     assert_eq!(get_z(app.world(), child).floor(), 0.0);

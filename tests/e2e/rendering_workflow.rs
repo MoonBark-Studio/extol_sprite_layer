@@ -5,6 +5,10 @@
 use bevy::prelude::*;
 use extol_sprite_layer::{LayerIndex, SpriteLayerPlugin, SpriteLayerOptions};
 
+fn set_parent(world: &mut World, child: Entity, parent: Entity) {
+    world.entity_mut(child).set_parent(parent);
+}
+
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug, Component)]
 enum GameLayer {
     Background,
@@ -73,8 +77,8 @@ fn test_complete_game_scene() {
     )).id();
     let tree_top = app.world_mut()
         .spawn(TransformBundle::from_transform(Transform::from_xyz(0.0, 20.0, 0.0)))
-        .set_parent(tree)
         .id();
+    set_parent(app.world_mut(), tree_top, tree);
     
     // Characters
     let player = app.world_mut().spawn((

@@ -4,6 +4,10 @@
 
 use bevy::prelude::*;
 use extol_sprite_layer::{LayerIndex, SpriteLayerPlugin, SpriteLayerOptions};
+
+fn set_parent(world: &mut World, child: Entity, parent: Entity) {
+    world.entity_mut(child).set_parent(parent);
+}
 use std::time::Instant;
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug, Component)]
@@ -219,9 +223,10 @@ fn test_memory_usage_with_hierarchy() {
         )).id();
         
         for _ in 0..20 {
-            app.world_mut()
+            let child = app.world_mut()
                 .spawn(TransformBundle::default())
-                .set_parent(parent);
+                .id();
+            set_parent(app.world_mut(), child, parent);
         }
     }
     
