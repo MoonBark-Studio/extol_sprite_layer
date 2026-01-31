@@ -46,14 +46,6 @@ fn test_y_sorting_enabled() {
     let mut app = test_app_with_ysort();
     
     // Spawn entities at same layer but different Y positions
-    let high_y = app.world_mut().spawn(
-        TransformBundle::from_transform(Transform::from_xyz(0.0, 100.0, 0.0))
-    ).set_parent(Entity::PLACEHOLDER).id();
-    let low_y = app.world_mut().spawn(
-        TransformBundle::from_transform(Transform::from_xyz(0.0, 0.0, 0.0))
-    ).set_parent(Entity::PLACEHOLDER).id();
-    
-    // Actually need to spawn them properly with the layer
     let high_y = app.world_mut().spawn((
         TransformBundle::from_transform(Transform::from_xyz(0.0, 100.0, 0.0)),
         TestLayer::Only,
