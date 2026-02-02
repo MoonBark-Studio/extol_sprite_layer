@@ -311,6 +311,7 @@ fn set_transform_z_internal(transform: &mut GlobalTransform, z: f32) {
 }
 
 /// Sets the given entity's global transform z. Does nothing if it doesn't have one.
+#[allow(dead_code)]
 fn set_transform_z(query: &mut Query<&mut GlobalTransform>, entity: Entity, z: f32) {
     let Some(mut transform) = query.get_mut(entity).ok() else {
         return;
