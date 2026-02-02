@@ -60,27 +60,27 @@ impl YPosBuffer {
     pub fn clear(&mut self) {
         self.entries.clear();
     }
-    
+
     /// Reserves capacity for the given number of elements
     pub fn reserve(&mut self, additional: usize) {
         self.entries.reserve(additional);
     }
-    
+
     /// Pushes a new entry to the buffer
     pub fn push(&mut self, entry: (Entity, f32)) {
         self.entries.push(entry);
     }
-    
+
     /// Returns the number of entries
     pub fn len(&self) -> usize {
         self.entries.len()
     }
-    
+
     /// Returns true if the buffer is empty
     pub fn is_empty(&self) -> bool {
         self.entries.is_empty()
     }
-    
+
     /// Sorts the buffer by Y position (descending)
     pub fn sort_by<F>(&mut self, compare: F)
     where
@@ -88,7 +88,7 @@ impl YPosBuffer {
     {
         self.entries.sort_by(compare);
     }
-    
+
     /// Returns an iterator over the entries
     pub fn iter(&self) -> impl Iterator<Item = &(Entity, f32)> {
         self.entries.iter()
@@ -267,7 +267,7 @@ pub fn set_z_coordinates<Layer: LayerIndex>(
     options: Res<SpriteLayerOptions>,
 ) {
     let layers = pool.map();
-    
+
     if options.y_sort {
         // We y-sort everything because this avoids the overhead of grouping
         // entities by their layer.
@@ -279,7 +279,7 @@ pub fn set_z_coordinates<Layer: LayerIndex>(
         };
         // note: parallelizing with rayon is slower(!) here. I'm not sure why. maybe it has to do
         // with some kind of inter-thread overhead or L1/L2 cache not being shared?
-        
+
         // Reuse buffer allocation
         y_sort_buffer.clear();
         y_sort_buffer.buffer_mut().extend(layers.keys().cloned());

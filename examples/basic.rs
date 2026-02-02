@@ -53,7 +53,10 @@ fn spawn_sprites(mut commands: Commands) {
         };
 
         // Bevy 0.18: Use required components instead of SpriteBundle
-        commands.spawn((sprite.clone(), Transform::from_translation(pos - 80.0 * Vec3::X)));
+        commands.spawn((
+            sprite.clone(),
+            Transform::from_translation(pos - 80.0 * Vec3::X),
+        ));
         commands.spawn((
             sprite.clone(),
             Transform::from_translation(pos + 80.0 * Vec3::X),
