@@ -12,12 +12,12 @@ repository = "https://github.com/MoonBark-Studio/extol_sprite_layer"
 exclude = [ "docs/*" ]
 
 [dependencies]
-bevy = { version = "0.18", default-features = false }
+bevy = { workspace = true }
 ordered-float = "4.2.0"
 tap = "1.0.1"
 
 [dev-dependencies]
-bevy = { version = "0.18", default-features = false, features = ["bevy_asset", "bevy_render", "bevy_sprite", "bevy_core_pipeline", "x11"] }
+bevy = { workspace = true }
 criterion = "0.5.0"
 fastrand = "1.9.0"
 

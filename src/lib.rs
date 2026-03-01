@@ -42,17 +42,9 @@ impl<Layer> LayerMapPool<Layer> {
 
 /// Resource for pooling y-position data during sorting.
 /// Stores (Entity, y_position) pairs to eliminate random access during sort.
-#[derive(Resource)]
+#[derive(Resource, Default)]
 pub struct YPosBuffer {
     entries: Vec<(Entity, f32)>,
-}
-
-impl Default for YPosBuffer {
-    fn default() -> Self {
-        Self {
-            entries: Vec::new(),
-        }
-    }
 }
 
 impl YPosBuffer {
@@ -97,17 +89,9 @@ impl YPosBuffer {
 
 /// Resource for pooling y-sort buffer allocations across frames.
 /// This eliminates per-frame Vec allocation for sorting.
-#[derive(Resource)]
+#[derive(Resource, Default)]
 pub struct YSortBuffer {
     entities: Vec<Entity>,
-}
-
-impl Default for YSortBuffer {
-    fn default() -> Self {
-        Self {
-            entities: Vec::new(),
-        }
-    }
 }
 
 impl YSortBuffer {
